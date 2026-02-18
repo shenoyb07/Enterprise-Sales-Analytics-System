@@ -1,0 +1,20 @@
+# Python dependencies
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+
+# Node.js dependencies
+node_modules/
+.next/
+out/
+build/
+.env*.local
+
+# Data files (optional, but usually CSVs are excluded if they are large samples)
+*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
