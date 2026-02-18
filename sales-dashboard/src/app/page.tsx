@@ -33,6 +33,11 @@ export default function Home() {
     async function fetchData() {
       try {
         setLoading(true);
+
+        if (!supabase) {
+          throw new Error("Supabase client not initialized");
+        }
+
         // Attempt to fetch from the view v_executive_summary
         const { data, error } = await supabase
           .from('v_executive_summary')
