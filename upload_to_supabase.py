@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_URL = os.getenv("DB_URL")
+if not DB_URL:
+    print("❌ ERROR: DB_URL not found in .env file.")
+    exit(1)
 
 # These paths are set to "root" because that's where your 'ls' showed them
 tables = [

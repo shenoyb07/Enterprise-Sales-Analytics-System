@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface KPICardProps {
     title: string;
@@ -49,9 +50,15 @@ export const KPICard = ({ title, value, trend, trendUp, icon, color }: KPICardPr
     };
 
     const colorStyles = {
-        cyan: 'border-cyan-500/20 shadow-cyan-500/10 text-cyan-400',
-        purple: 'border-fuchsia-500/20 shadow-fuchsia-500/10 text-fuchsia-400',
-        green: 'border-emerald-500/20 shadow-emerald-500/10 text-emerald-400',
+        cyan: 'border-cyan-500/20 shadow-cyan-500/5 text-cyan-400',
+        purple: 'border-fuchsia-500/20 shadow-fuchsia-500/5 text-fuchsia-400',
+        green: 'border-emerald-500/20 shadow-emerald-500/5 text-emerald-400',
+    };
+
+    const iconStyles = {
+        cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
+        purple: 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/20',
+        green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
     };
 
     return (
@@ -65,19 +72,19 @@ export const KPICard = ({ title, value, trend, trendUp, icon, color }: KPICardPr
                 transformStyle: 'preserve-3d',
             }}
             className={cn(
-                "glass relative flex flex-col gap-4 rounded-2xl p-6 transition-colors duration-500",
+                "glass glass-hover relative flex flex-col gap-6 rounded-2xl p-6 overflow-hidden",
                 colorStyles[color]
             )}
         >
             <div
                 style={{ transform: 'translateZ(50px)' }}
-                className="flex items-center justify-between"
+                className="flex items-start justify-between"
             >
                 <div className="flex flex-col gap-1">
-                    <p className="text-sm font-medium text-slate-400">{title}</p>
-                    <h3 className="text-3xl font-bold tracking-tight text-slate-100">{value}</h3>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{title}</p>
+                    <h3 className="text-3xl font-black tracking-tighter text-slate-100">{value}</h3>
                 </div>
-                <div className={cn("rounded-xl p-3 bg-white/5", colorStyles[color])}>
+                <div className={cn("rounded-xl p-3 border", iconStyles[color])}>
                     {icon}
                 </div>
             </div>
@@ -85,25 +92,31 @@ export const KPICard = ({ title, value, trend, trendUp, icon, color }: KPICardPr
             {trend && (
                 <div
                     style={{ transform: 'translateZ(30px)' }}
-                    className="flex items-center gap-2"
+                    className="flex items-center justify-between"
                 >
-                    <span className={cn(
-                        "text-xs font-semibold px-2 py-0.5 rounded-full bg-white/5",
-                        trendUp ? "text-emerald-400" : "text-rose-400"
-                    )}>
-                        {trend}
-                    </span>
-                    <span className="text-xs text-slate-500 font-medium">vs last month</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className={cn(
+                            "flex items-center gap-0.5 text-[10px] font-black px-2 py-0.5 rounded-full border",
+                            trendUp
+                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                : "bg-rose-500/10 text-rose-400 border-rose-500/20"
+                        )}>
+                            {trendUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
+                            {trend}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Growth</span>
+                    </div>
                 </div>
             )}
 
-            {/* Glow Effect */}
+            {/* Subtle Gradient Glow */}
             <div className={cn(
-                "absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity blur-xl -z-10",
-                color === 'cyan' && "bg-cyan-500/20",
-                color === 'purple' && "bg-fuchsia-500/20",
-                color === 'green' && "bg-emerald-500/20"
+                "absolute -bottom-10 -right-10 w-32 h-32 blur-3xl rounded-full -z-10 opacity-30",
+                color === 'cyan' && "bg-cyan-500",
+                color === 'purple' && "bg-fuchsia-500",
+                color === 'green' && "bg-emerald-500"
             )} />
         </motion.div>
     );
 };
+
